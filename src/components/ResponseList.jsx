@@ -1,56 +1,35 @@
-function ResponseList() {
-  const responses =
-    JSON.parse(localStorage.getItem("contactResponses")) || [];
+import React from "react";
 
-  const deleteResponse = (index) => {
-    const updated = responses.filter(
-      (_, i) => i !== index
-    );
-
-    localStorage.setItem(
-      "contactResponses",
-      JSON.stringify(updated)
-    );
-
-    window.location.reload();
-  };
-
+function ResponseList({ responses, deleteResponse }) {
   return (
-    <div>
-      <h2>Stored Responses</h2>
-
+    <div className="card-container">
       {responses.length === 0 ? (
-        <p>No responses found.</p>
+        <p>No Responses Yet</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Message</th>
-              <th>Timestamp</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+        responses.map((item, index) => (
+          <div className="contact-card" key={index}>
+            <h3>👤 {item.name}</h3>
 
-          <tbody>
-            {responses.map((item, index) => (
-              <tr key={index}>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{item.message}</td>
-                <td>{item.timestamp}</td>
-                <td>
-                  <button
-                    onClick={() => deleteResponse(index)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+            <p>
+              <strong>📧 Email:</strong> {item.email}
+            </p>
+
+            <p>
+              <strong>💬 Message:</strong> {item.message}
+            </p>
+
+            <p>
+              <strong>🕒 Time:</strong> {item.timestamp}
+            </p>
+
+            <button
+              className="delete-btn"
+              onClick={() => deleteResponse(index)}
+            >
+              Delete
+            </button>
+          </div>
+        ))
       )}
     </div>
   );

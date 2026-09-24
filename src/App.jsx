@@ -11,6 +11,10 @@ function App() {
     message: "",
   });
 
+  const [responses, setResponses] = useState(
+    JSON.parse(localStorage.getItem("contactResponses")) || []
+  );
+
   const [isAdmin, setIsAdmin] = useState(false);
   const [adminPassword, setAdminPassword] = useState("");
 
@@ -24,17 +28,19 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const oldData =
-      JSON.parse(localStorage.getItem("contactResponses")) || [];
+    const updatedData = [
+      ...responses,
+      {
+        ...formData,
+        timestamp: new Date().toLocaleString(),
+      },
+    ];
 
-    oldData.push({
-      ...formData,
-      timestamp: new Date().toLocaleString(),
-    });
+    setResponses(updatedData);
 
     localStorage.setItem(
       "contactResponses",
-      JSON.stringify(oldData)
+      JSON.stringify(updatedData)
     );
 
     alert("Response Saved Successfully!");
@@ -54,9 +60,23 @@ function App() {
     }
   };
 
+  const deleteResponse = (index) => {
+    const updatedResponses = responses.filter(
+      (_, i) => i !== index
+    );
+
+    setResponses(updatedResponses);
+
+    localStorage.setItem(
+      "contactResponses",
+      JSON.stringify(updatedResponses)
+    );
+  };
+
   return (
-    <div className={darkMode ? "container dark" : "container"}>
+    <div className={darkMode ? "app dark" : "app"}>
       <button
+        className="theme-btn"
         onClick={() => setDarkMode(!darkMode)}
       >
         {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
@@ -91,7 +111,9 @@ function App() {
           required
         />
 
-        <button type="submit">Submit</button>
+        <button className="submit-btn" type="submit">
+          Submit
+        </button>
       </form>
 
       <hr />
@@ -109,12 +131,18 @@ function App() {
             }
           />
 
-          <button onClick={handleAdminLogin}>
+          <button
+            className="admin-btn"
+            onClick={handleAdminLogin}
+          >
             Login
           </button>
         </div>
       ) : (
-        <ResponseList />
+        <ResponseList
+          responses={responses}
+          deleteResponse={deleteResponse}
+        />
       )}
     </div>
   );
