@@ -1,0 +1,80 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(
+    135deg,
+    #74ebd5,
+    #acb6e5
+  );
+}
+
+.container {
+  text-align: center;
+  padding: 30px;
+}
+
+h1 {
+  color: #222;
+  font-size: 3rem;
+}
+
+h2 {
+  color: #333;
+}
+
+h3 {
+  color: #444;
+}
+
+.input-section {
+  margin: 20px;
+}
+
+input {
+  padding: 10px;
+  width: 250px;
+  border-radius: 8px;
+  border: 1px solid gray;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 8px;
+  border: none;
+  border-radius: 8px;
+  background: #0066ff;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+button:hover {
+  background: #004ecc;
+}
+
+.card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px auto;
+  width: 300px;
+  box-shadow: 0 4px 12px gray;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-8px)
+    scale(1.03);
+}
+
+.delete-btn {
+  background: crimson;
+}
+
+.delete-btn:hover {
+  background: darkred;
+}
+
+.top-buttons {
+  margin-bottom: 20px;
+}
